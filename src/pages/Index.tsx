@@ -1,12 +1,118 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState, useEffect } from "react";
+import Header from "@/components/Header";
+import HeroCarousel from "@/components/HeroCarousel";
+import CategoryNav from "@/components/CategoryNav";
+import ProductCard from "@/components/ProductCard";
+import ShoppingCartSheet from "@/components/ShoppingCartSheet";
+import Footer from "@/components/Footer";
+import { products } from "@/data/products";
+import { Product, CartItem } from "@/types/product";
+import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
+  const { toast } = useToast();
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Load cart from localStorage on mount
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cartItems");
+    if (savedCart) {
+      setCartItems(JSON.parse(savedCart));
+    }
+  }, []);
+
+  // Save cart to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
+  const filteredProducts =
+    selectedCategory === "All"
+      ? products
+      : products.filter((product) => product.category === selectedCategory);
+
+  const handleAddToCart = (product: Product) => {
+    setCartItems((prevItems) => {
+      const existingItem = prevItems.find((item) => item.id === product.id);
+      if (existingItem) {
+        return prevItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prevItems, { ...product, quantity: 1 }];
+    });
+    
+    toast({
+      title: "Added to cart",
+      description: `${product.title} has been added to your cart.`,
+    });
+  };
+
+  const handleUpdateQuantity = (productId: string, newQuantity: number) => {
+    setCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === productId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
+  const handleRemoveItem = (productId: string) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+    toast({
+      title: "Removed from cart",
+      description: "Item has been removed from your cart.",
+    });
+  };
+
+  const cartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      <Header cartItemsCount={cartItemsCount} onCartClick={() => setIsCartOpen(true)} />
+      
+      <main>
+        <HeroCarousel />
+        
+        <CategoryNav
+          selectedCategory={selectedCategory}
+          onCategoryChange={setSelectedCategory}
+        />
+        
+        <section className="container px-4 py-12">
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-foreground">
+              {selectedCategory === "All" ? "All Products" : selectedCategory}
+            </h2>
+            <p className="mt-2 text-muted-foreground">
+              Discover our curated collection of premium beauty products
+            </p>
+          </div>
+          
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {filteredProducts.map((product) => (
+              <ProductCard
+                key={product.id}
+                product={product}
+                onAddToCart={handleAddToCart}
+              />
+            ))}
+          </div>
+        </section>
+      </main>
+      
+      <Footer />
+      
+      <ShoppingCartSheet
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cartItems={cartItems}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+      />
     </div>
   );
 };
