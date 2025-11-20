@@ -7,25 +7,25 @@ const Footer = () => {
       <div className="container px-4 py-12">
         <div className="grid gap-8 md:grid-cols-3">
           <div>
-            <h3 className="mb-4 text-lg font-semibold">About Us</h3>
+            <h3 className="mb-4 text-lg font-semibold">Sobre Nós</h3>
             <p className="text-sm text-muted-foreground">
-              Your premier destination for high-quality makeup and beauty products. 
-              Discover the latest trends and timeless classics.
+              Seu destino principal para produtos de maquiagem e beleza de alta qualidade. 
+              Descubra as últimas tendências e clássicos atemporais.
             </p>
           </div>
           
           <div>
-            <h3 className="mb-4 text-lg font-semibold">Quick Links</h3>
+            <h3 className="mb-4 text-lg font-semibold">Links Rápidos</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><a href="#" className="hover:text-primary transition-smooth">About</a></li>
-              <li><a href="#" className="hover:text-primary transition-smooth">Contact</a></li>
-              <li><a href="#" className="hover:text-primary transition-smooth">Shipping Info</a></li>
-              <li><a href="#" className="hover:text-primary transition-smooth">Returns</a></li>
+              <li><a href="#" className="hover:text-primary transition-smooth">Sobre</a></li>
+              <li><a href="#" className="hover:text-primary transition-smooth">Contato</a></li>
+              <li><a href="#" className="hover:text-primary transition-smooth">Informações de Entrega</a></li>
+              <li><a href="#" className="hover:text-primary transition-smooth">Devoluções</a></li>
             </ul>
           </div>
           
           <div>
-            <h3 className="mb-4 text-lg font-semibold">Follow Us</h3>
+            <h3 className="mb-4 text-lg font-semibold">Siga-nos</h3>
             <div className="flex gap-2">
               <Button
                 variant="outline"
@@ -62,7 +62,7 @@ const Footer = () => {
         </div>
         
         <div className="mt-8 border-t border-border pt-8 text-center text-sm text-muted-foreground">
-          <p>&copy; {new Date().getFullYear()} Glam Beauty. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Glam Beauty. Todos os direitos reservados.</p>
         </div>
       </div>
     </footer>

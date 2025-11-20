@@ -47,8 +47,8 @@ const Index = () => {
     });
     
     toast({
-      title: "Added to cart",
-      description: `${product.title} has been added to your cart.`,
+      title: "Adicionado ao carrinho",
+      description: `${product.title} foi adicionado ao seu carrinho.`,
     });
   };
 
@@ -63,8 +63,8 @@ const Index = () => {
   const handleRemoveItem = (productId: string) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
     toast({
-      title: "Removed from cart",
-      description: "Item has been removed from your cart.",
+      title: "Removido do carrinho",
+      description: "Item foi removido do seu carrinho.",
     });
   };
 
@@ -85,10 +85,10 @@ const Index = () => {
         <section className="container px-4 py-12">
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-foreground">
-              {selectedCategory === "All" ? "All Products" : selectedCategory}
+              {selectedCategory === "Todos" ? "Todos os Produtos" : selectedCategory}
             </h2>
             <p className="mt-2 text-muted-foreground">
-              Discover our curated collection of premium beauty products
+              Descubra nossa coleção de produtos de beleza premium
             </p>
           </div>
           
