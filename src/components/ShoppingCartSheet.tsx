@@ -38,13 +38,13 @@ const ShoppingCartSheet = ({
     <Sheet open={isOpen} onOpenChange={onClose}>
       <SheetContent className="flex w-full flex-col sm:max-w-lg">
         <SheetHeader>
-          <SheetTitle>Shopping Cart</SheetTitle>
+          <SheetTitle>Carrinho de Compras</SheetTitle>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto py-4">
           {cartItems.length === 0 ? (
             <div className="flex h-full items-center justify-center text-muted-foreground">
-              Your cart is empty
+              Seu carrinho está vazio
             </div>
           ) : (
             <div className="space-y-4">
@@ -103,10 +103,10 @@ const ShoppingCartSheet = ({
           <SheetFooter className="flex-col gap-4">
             <div className="flex items-center justify-between border-t border-border pt-4">
               <span className="text-lg font-semibold">Total:</span>
-              <span className="text-2xl font-bold text-primary">${total.toFixed(2)}</span>
+              <span className="text-2xl font-bold text-primary">R$ {total.toFixed(2)}</span>
             </div>
             <Button className="w-full" size="lg" onClick={handleCheckout}>
-              Checkout
+              Finalizar Pedido
             </Button>
           </SheetFooter>
         )}

@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 
-const categories = ["All", "Lipstick", "Foundation", "Eyeshadow", "Mascara", "Blush", "Skincare"];
+const categories = ["Todos", "Batom", "Base", "Sombra", "Máscara", "Blush", "Skincare"];
 
 interface CategoryNavProps {
   selectedCategory: string;

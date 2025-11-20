@@ -10,14 +10,15 @@ import { useToast } from "@/hooks/use-toast";
 import { z } from "zod";
 
 const checkoutSchema = z.object({
-  name: z.string().trim().min(1, "Name is required").max(100),
-  email: z.string().trim().email("Invalid email address").max(255),
-  phone: z.string().trim().min(10, "Phone must be at least 10 digits").max(20),
-  address: z.string().trim().min(5, "Address is required").max(200),
-  city: z.string().trim().min(2, "City is required").max(100),
-  zipCode: z.string().trim().min(4, "ZIP code is required").max(20),
-  paymentMethod: z.enum(["credit", "debit", "pix"], {
-    errorMap: () => ({ message: "Please select a payment method" }),
+  name: z.string().trim().min(1, "Nome completo é obrigatório").max(100),
+  phone: z.string().trim().min(10, "Telefone deve ter pelo menos 10 dígitos").max(20),
+  neighborhood: z.string().trim().min(2, "Bairro é obrigatório").max(100),
+  block: z.string().trim().min(1, "Quadra é obrigatória").max(50),
+  street: z.string().trim().min(2, "Rua é obrigatória").max(150),
+  houseNumber: z.string().trim().min(1, "Número da casa é obrigatório").max(20),
+  deliveryNotes: z.string().trim().max(200).optional(),
+  paymentMethod: z.enum(["card", "pix", "cash"], {
+    errorMap: () => ({ message: "Por favor, selecione uma forma de pagamento" }),
   }),
 });
 
@@ -30,12 +31,13 @@ const Checkout = () => {
   
   const [formData, setFormData] = useState({
     name: "",
-    email: "",
     phone: "",
-    address: "",
-    city: "",
-    zipCode: "",
-    paymentMethod: "credit" as "credit" | "debit" | "pix",
+    neighborhood: "",
+    block: "",
+    street: "",
+    houseNumber: "",
+    deliveryNotes: "",
+    paymentMethod: "card" as "card" | "pix" | "cash",
   });
   
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -68,8 +70,8 @@ const Checkout = () => {
       });
       setErrors(newErrors);
       toast({
-        title: "Validation Error",
-        description: "Please check the form for errors",
+        title: "Erro de Validação",
+        description: "Por favor, verifique os erros no formulário",
         variant: "destructive",
       });
       return;
@@ -77,21 +79,26 @@ const Checkout = () => {
 
     // Create order summary
     const orderSummary = cartItems
-      .map((item: any) => `${item.quantity}x ${item.title} - $${(item.price * item.quantity).toFixed(2)}`)
+      .map((item: any) => `${item.quantity}x ${item.title} - R$ ${(item.price * item.quantity).toFixed(2)}`)
       .join("%0A");
 
+    const paymentMethodText = formData.paymentMethod === "card" ? "Cartão de Crédito/Débito" : 
+                              formData.paymentMethod === "pix" ? "PIX" : "Dinheiro";
+
     const message = encodeURIComponent(
-      `*New Order*\n\n` +
-      `*Customer Details:*\n` +
-      `Name: ${formData.name}\n` +
-      `Email: ${formData.email}\n` +
-      `Phone: ${formData.phone}\n\n` +
-      `*Delivery Address:*\n` +
-      `${formData.address}\n` +
-      `${formData.city}, ${formData.zipCode}\n\n` +
-      `*Payment Method:* ${formData.paymentMethod.toUpperCase()}\n\n` +
-      `*Order Items:*\n${decodeURIComponent(orderSummary)}\n\n` +
-      `*Total: $${total.toFixed(2)}*`
+      `*Novo Pedido*\n\n` +
+      `*Dados do Cliente:*\n` +
+      `Nome: ${formData.name}\n` +
+      `Telefone: ${formData.phone}\n\n` +
+      `*Endereço de Entrega:*\n` +
+      `Bairro: ${formData.neighborhood}\n` +
+      `Quadra: ${formData.block}\n` +
+      `Rua: ${formData.street}\n` +
+      `Número: ${formData.houseNumber}\n` +
+      (formData.deliveryNotes ? `Observações: ${formData.deliveryNotes}\n\n` : '\n') +
+      `*Forma de Pagamento:* ${paymentMethodText}\n\n` +
+      `*Itens do Pedido:*\n${decodeURIComponent(orderSummary)}\n\n` +
+      `*Total: R$ ${total.toFixed(2)}*`
     );
 
     const whatsappUrl = `https://api.whatsapp.com/send?phone=559891102463&text=${message}`;
@@ -103,8 +110,8 @@ const Checkout = () => {
     window.open(whatsappUrl, "_blank");
     
     toast({
-      title: "Order Placed!",
-      description: "Redirecting to WhatsApp to complete your order...",
+      title: "Pedido Realizado!",
+      description: "Redirecionando para o WhatsApp para completar seu pedido...",
     });
     
     // Redirect to home after a short delay
@@ -118,13 +125,13 @@ const Checkout = () => {
       <div className="container flex min-h-screen flex-col items-center justify-center px-4">
         <Card className="w-full max-w-md text-center">
           <CardContent className="py-12">
-            <h2 className="mb-4 text-2xl font-bold">Your cart is empty</h2>
+            <h2 className="mb-4 text-2xl font-bold">Seu carrinho está vazio</h2>
             <p className="mb-6 text-muted-foreground">
-              Add some products to your cart before checking out
+              Adicione alguns produtos ao seu carrinho antes de finalizar a compra
             </p>
             <Button onClick={() => navigate("/")}>
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Continue Shopping
+              Continuar Comprando
             </Button>
           </CardContent>
         </Card>
@@ -141,19 +148,19 @@ const Checkout = () => {
           onClick={() => navigate("/")}
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Shop
+          Voltar para Loja
         </Button>
 
         <div className="grid gap-8 lg:grid-cols-2">
           {/* Checkout Form */}
           <Card>
             <CardHeader>
-              <CardTitle>Delivery Information</CardTitle>
+              <CardTitle>Informações de Entrega</CardTitle>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <Label htmlFor="name">Full Name *</Label>
+                  <Label htmlFor="name">Nome Completo *</Label>
                   <Input
                     id="name"
                     value={formData.name}
@@ -166,24 +173,11 @@ const Checkout = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="email">Email *</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => handleInputChange("email", e.target.value)}
-                    className={errors.email ? "border-destructive" : ""}
-                  />
-                  {errors.email && (
-                    <p className="mt-1 text-xs text-destructive">{errors.email}</p>
-                  )}
-                </div>
-
-                <div>
-                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Label htmlFor="phone">Número de Telefone *</Label>
                   <Input
                     id="phone"
                     type="tel"
+                    placeholder="(00) 00000-0000"
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                     className={errors.phone ? "border-destructive" : ""}
@@ -194,47 +188,74 @@ const Checkout = () => {
                 </div>
 
                 <div>
-                  <Label htmlFor="address">Address *</Label>
+                  <Label htmlFor="neighborhood">Bairro *</Label>
                   <Input
-                    id="address"
-                    value={formData.address}
-                    onChange={(e) => handleInputChange("address", e.target.value)}
-                    className={errors.address ? "border-destructive" : ""}
+                    id="neighborhood"
+                    value={formData.neighborhood}
+                    onChange={(e) => handleInputChange("neighborhood", e.target.value)}
+                    className={errors.neighborhood ? "border-destructive" : ""}
                   />
-                  {errors.address && (
-                    <p className="mt-1 text-xs text-destructive">{errors.address}</p>
+                  {errors.neighborhood && (
+                    <p className="mt-1 text-xs text-destructive">{errors.neighborhood}</p>
                   )}
                 </div>
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <Label htmlFor="city">City *</Label>
+                    <Label htmlFor="block">Quadra *</Label>
                     <Input
-                      id="city"
-                      value={formData.city}
-                      onChange={(e) => handleInputChange("city", e.target.value)}
-                      className={errors.city ? "border-destructive" : ""}
+                      id="block"
+                      value={formData.block}
+                      onChange={(e) => handleInputChange("block", e.target.value)}
+                      className={errors.block ? "border-destructive" : ""}
                     />
-                    {errors.city && (
-                      <p className="mt-1 text-xs text-destructive">{errors.city}</p>
+                    {errors.block && (
+                      <p className="mt-1 text-xs text-destructive">{errors.block}</p>
                     )}
                   </div>
                   <div>
-                    <Label htmlFor="zipCode">ZIP Code *</Label>
+                    <Label htmlFor="houseNumber">Número da Casa *</Label>
                     <Input
-                      id="zipCode"
-                      value={formData.zipCode}
-                      onChange={(e) => handleInputChange("zipCode", e.target.value)}
-                      className={errors.zipCode ? "border-destructive" : ""}
+                      id="houseNumber"
+                      value={formData.houseNumber}
+                      onChange={(e) => handleInputChange("houseNumber", e.target.value)}
+                      className={errors.houseNumber ? "border-destructive" : ""}
                     />
-                    {errors.zipCode && (
-                      <p className="mt-1 text-xs text-destructive">{errors.zipCode}</p>
+                    {errors.houseNumber && (
+                      <p className="mt-1 text-xs text-destructive">{errors.houseNumber}</p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <Label htmlFor="paymentMethod">Payment Method *</Label>
+                  <Label htmlFor="street">Rua *</Label>
+                  <Input
+                    id="street"
+                    value={formData.street}
+                    onChange={(e) => handleInputChange("street", e.target.value)}
+                    className={errors.street ? "border-destructive" : ""}
+                  />
+                  {errors.street && (
+                    <p className="mt-1 text-xs text-destructive">{errors.street}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="deliveryNotes">Observações de Entrega (Opcional)</Label>
+                  <Input
+                    id="deliveryNotes"
+                    placeholder="Ex: Casa amarela, portão preto"
+                    value={formData.deliveryNotes}
+                    onChange={(e) => handleInputChange("deliveryNotes", e.target.value)}
+                    className={errors.deliveryNotes ? "border-destructive" : ""}
+                  />
+                  {errors.deliveryNotes && (
+                    <p className="mt-1 text-xs text-destructive">{errors.deliveryNotes}</p>
+                  )}
+                </div>
+
+                <div>
+                  <Label htmlFor="paymentMethod">Forma de Pagamento *</Label>
                   <select
                     id="paymentMethod"
                     value={formData.paymentMethod}
@@ -245,9 +266,9 @@ const Checkout = () => {
                       errors.paymentMethod ? "border-destructive" : "border-input"
                     } bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
                   >
-                    <option value="credit">Credit Card</option>
-                    <option value="debit">Debit Card</option>
+                    <option value="card">Cartão de Crédito/Débito</option>
                     <option value="pix">PIX</option>
+                    <option value="cash">Dinheiro</option>
                   </select>
                   {errors.paymentMethod && (
                     <p className="mt-1 text-xs text-destructive">
@@ -257,7 +278,7 @@ const Checkout = () => {
                 </div>
 
                 <Button type="submit" className="w-full" size="lg">
-                  Complete Order via WhatsApp
+                  Finalizar Pedido via WhatsApp
                 </Button>
               </form>
             </CardContent>
@@ -266,7 +287,7 @@ const Checkout = () => {
           {/* Order Summary */}
           <Card className="h-fit">
             <CardHeader>
-              <CardTitle>Order Summary</CardTitle>
+              <CardTitle>Resumo do Pedido</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
@@ -280,12 +301,12 @@ const Checkout = () => {
                     <div className="flex-1">
                       <h4 className="font-semibold">{item.title}</h4>
                       <p className="text-sm text-muted-foreground">
-                        Quantity: {item.quantity}
+                        Quantidade: {item.quantity}
                       </p>
                     </div>
                     <div className="text-right">
                       <p className="font-semibold">
-                        ${(item.price * item.quantity).toFixed(2)}
+                        R$ {(item.price * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -295,7 +316,7 @@ const Checkout = () => {
                 
                 <div className="flex items-center justify-between text-lg font-bold">
                   <span>Total:</span>
-                  <span className="text-2xl text-primary">${total.toFixed(2)}</span>
+                  <span className="text-2xl text-primary">R$ {total.toFixed(2)}</span>
                 </div>
               </div>
             </CardContent>

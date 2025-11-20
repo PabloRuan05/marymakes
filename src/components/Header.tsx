@@ -15,17 +15,17 @@ const Header = ({ cartItemsCount, onCartClick }: HeaderProps) => {
         <div className="flex-1" />
         
         <div className="flex items-center justify-center">
-          <img src={logo} alt="Glam Beauty Logo" className="h-12 w-auto object-contain" />
+          <img src={logo} alt="Logo Glam Beauty" className="h-12 w-auto object-contain" />
         </div>
 
         <div className="flex flex-1 items-center justify-end">
           <Button
             variant="ghost"
-            size="icon"
+            size="lg"
             className="relative hover:bg-secondary transition-smooth"
             onClick={onCartClick}
           >
-            <ShoppingCart className="h-5 w-5" />
+            <ShoppingCart className="h-6 w-6" />
             {cartItemsCount > 0 && (
               <Badge className="absolute -right-1 -top-1 h-5 w-5 rounded-full bg-primary p-0 text-xs">
                 {cartItemsCount}
