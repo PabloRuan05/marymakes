@@ -1,68 +1,141 @@
 import { Product } from "@/types/product";
 
+//import imgs products
+import po from "@/assets/produtos/po.jpg";
+import blush from "@/assets/produtos/blush.jpg";
+import cilios from "@/assets/produtos/cilios.jpg";
+import iluminado from "@/assets/produtos/iluminado.jpg";
+import iluminado2 from "@/assets/produtos/iluminado2.jpg";
+import iluminado3 from "@/assets/produtos/iluminado3.jpg";
+import pinceis from "@/assets/produtos/pinceis.jpg";
+import pincelcomcilios from "@/assets/produtos/pincelcomcilios.jpg";
+import pincel from "@/assets/produtos/pincel.jpg";
+import pincelgrosso from "@/assets/produtos/pincelgrosso.jpg";
+import pincelsereia from "@/assets/produtos/pincelsereia.jpg";
+import pincelsereia1 from "@/assets/produtos/pincelsereia1.jpg";
+import pincelsereia2 from "@/assets/produtos/pincelsereia2.jpg";
+import pincelsereia3 from "@/assets/produtos/pincelsereia3.jpg";
+import sombra from "@/assets/produtos/sombra.jpg";
+
 export const products: Product[] = [
   {
     id: "1",
-    title: "Batom Matte Aveludado",
-    description: "Batom matte de longa duração e alta pigmentação com acabamento aveludado",
-    category: "Batom",
+    title: "Pó",
+    description: "",
+    category: "Pó",
     price: 24.99,
-    image: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=500&h=500&fit=crop"
+    image: po,
   },
   {
     id: "2",
-    title: "Base Radiante",
-    description: "Base de cobertura total com FPS 30 para um acabamento natural e radiante",
-    category: "Base",
-    price: 42.00,
-    image: "https://images.unsplash.com/photo-1631214524020-7e18db9a8f92?w=500&h=500&fit=crop"
+    title: "Blush",
+    description: "",
+    category: "Blush",
+    price: 42.0,
+    image: blush,
   },
   {
     id: "3",
-    title: "Paleta de Sombras Luminosas",
-    description: "12 tons versáteis desde neutros suaves até cores vibrantes",
-    category: "Sombra",
-    price: 38.50,
-    image: "https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=500&h=500&fit=crop"
+    title: "cilios",
+    description: "",
+    category: "Cílios",
+    price: 38.5,
+    image: cilios,
   },
   {
     id: "4",
-    title: "Máscara de Cílios Volumosa",
-    description: "Volume e comprimento dramáticos sem grumos ou borrões",
-    category: "Máscara",
-    price: 22.00,
-    image: "https://images.unsplash.com/photo-1631730486572-226d1f595b68?w=500&h=500&fit=crop"
+    title: "Iluminado",
+    description: "",
+    category: "Iluminado",
+    price: 22.0,
+    image: iluminado,
   },
   {
     id: "5",
-    title: "Blush Sedoso",
-    description: "Rubor de aparência natural com cobertura modulável",
-    category: "Blush",
-    price: 26.99,
-    image: "https://images.unsplash.com/photo-1583241800698-e4e8b4a2f36b?w=500&h=500&fit=crop"
+    title: "Iluminado",
+    description: "",
+    category: "Iluminado",
+    price: 22.0,
+    image: iluminado2,
   },
   {
     id: "6",
-    title: "Sérum Facial Hidratante",
-    description: "Hidratação intensiva com ácido hialurônico e vitaminas",
-    category: "Skincare",
-    price: 45.00,
-    image: "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=500&h=500&fit=crop"
+    title: "Iluminado",
+    description: "",
+    category: "Iluminado",
+    price: 22.0,
+    image: iluminado3,
   },
   {
     id: "7",
-    title: "Batom Líquido Luxo",
-    description: "Batom líquido de alto brilho com uso confortável",
-    category: "Batom",
-    price: 21.50,
-    image: "https://images.unsplash.com/photo-1596704017254-9b121068f4f5?w=500&h=500&fit=crop"
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pinceis,
   },
   {
     id: "8",
-    title: "Base Acabamento Perfeito",
-    description: "Base leve para uso durante todo o dia",
-    category: "Base",
-    price: 39.99,
-    image: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=500&h=500&fit=crop"
-  }
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pincelcomcilios,
+  },
+  {
+    id: "9",
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pincel,
+  },
+  {
+    id: "10",
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pincelgrosso,
+  },
+  {
+    id: "11",
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pincelsereia,
+  },
+  {
+    id: "12",
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pincelsereia1,
+  },
+  {
+    id: "13",
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pincelsereia2,
+  },
+  {
+    id: "14",
+    title: "Pincel",
+    description: "",
+    category: "Pincéis",
+    price: 45.0,
+    image: pincelsereia3,
+  },
+  {
+    id: "15",
+    title: "Sombra",
+    description: "",
+    category: "Sombra",
+    price: 45.0,
+    image: sombra,
+  },
 ];

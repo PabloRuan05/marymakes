@@ -11,7 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 
 const Index = () => {
   const { toast } = useToast();
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
@@ -29,7 +29,7 @@ const Index = () => {
   }, [cartItems]);
 
   const filteredProducts =
-    selectedCategory === "All"
+    selectedCategory === "Todos"
       ? products
       : products.filter((product) => product.category === selectedCategory);
 
@@ -45,7 +45,7 @@ const Index = () => {
       }
       return [...prevItems, { ...product, quantity: 1 }];
     });
-    
+
     toast({
       title: "Adicionado ao carrinho",
       description: `${product.title} foi adicionado ao seu carrinho.`,
@@ -61,37 +61,47 @@ const Index = () => {
   };
 
   const handleRemoveItem = (productId: string) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
+    setCartItems((prevItems) =>
+      prevItems.filter((item) => item.id !== productId)
+    );
     toast({
       title: "Removido do carrinho",
       description: "Item foi removido do seu carrinho.",
     });
   };
 
-  const cartItemsCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+  const cartItemsCount = cartItems.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
 
   return (
     <div className="min-h-screen bg-background">
-      <Header cartItemsCount={cartItemsCount} onCartClick={() => setIsCartOpen(true)} />
-      
+      <Header
+        cartItemsCount={cartItemsCount}
+        onCartClick={() => setIsCartOpen(true)}
+      />
+
       <main>
         <HeroCarousel />
-        
+
         <CategoryNav
           selectedCategory={selectedCategory}
           onCategoryChange={setSelectedCategory}
         />
-        
+
         <section className="container px-4 py-12">
           <div className="mb-8">
             <h2 className="text-3xl font-bold text-foreground">
-              {selectedCategory === "Todos" ? "Todos os Produtos" : selectedCategory}
+              {selectedCategory === "Todos"
+                ? "Todos os Produtos"
+                : selectedCategory}
             </h2>
             <p className="mt-2 text-muted-foreground">
               Descubra nossa coleção de produtos de beleza premium
             </p>
           </div>
-          
+
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {filteredProducts.map((product) => (
               <ProductCard
@@ -103,9 +113,9 @@ const Index = () => {
           </div>
         </section>
       </main>
-      
+
       <Footer />
-      
+
       <ShoppingCartSheet
         isOpen={isCartOpen}
         onClose={() => setIsCartOpen(false)}

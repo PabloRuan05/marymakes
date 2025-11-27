@@ -1,13 +1,24 @@
 import { Button } from "@/components/ui/button";
 
-const categories = ["Todos", "Batom", "Base", "Sombra", "Máscara", "Blush", "Skincare"];
+const categories = [
+  "Todos",
+  "Pincéis",
+  "Cílios",
+  "Sombra",
+  "Iluminado",
+  "Blush",
+  "Pó",
+];
 
 interface CategoryNavProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
 }
 
-const CategoryNav = ({ selectedCategory, onCategoryChange }: CategoryNavProps) => {
+const CategoryNav = ({
+  selectedCategory,
+  onCategoryChange,
+}: CategoryNavProps) => {
   return (
     <nav className="w-full border-b border-border bg-background">
       <div className="container px-4">
