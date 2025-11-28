@@ -1,7 +1,7 @@
 import { Product } from "@/types/product";
 
 //import imgs products
-import po from "@/assets/produtos/po.jpg";
+import po from "@/assets/produtos/pobanana.jpg";
 import blush from "@/assets/produtos/blush.jpg";
 import cilios from "@/assets/produtos/cilios.jpg";
 import iluminado from "@/assets/produtos/iluminado.jpg";
