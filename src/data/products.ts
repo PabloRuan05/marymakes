@@ -1,7 +1,6 @@
 import { Product } from "@/types/product";
 
 //import imgs products
-import po from "@/assets/produtos/pobanana.jpg";
 import blush from "@/assets/produtos/blush.jpg";
 import cilios from "@/assets/produtos/cilios.jpg";
 import iluminado from "@/assets/produtos/iluminado.jpg";
@@ -18,14 +17,6 @@ import pincelsereia3 from "@/assets/produtos/pincelsereia3.jpg";
 import sombra from "@/assets/produtos/sombra.jpg";
 
 export const products: Product[] = [
-  {
-    id: "1",
-    title: "Pó",
-    description: "",
-    category: "Pó",
-    price: 24.99,
-    image: po,
-  },
   {
     id: "2",
     title: "Blush",
