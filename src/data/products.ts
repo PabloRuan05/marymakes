@@ -1,20 +1,21 @@
 import { Product } from "@/types/product";
 
 //import imgs products
-import blush from "@/assets/blush.jpg";
-import cilios from "@/assets/cilios.jpg";
-import iluminado from "@/assets/iluminado.jpg";
-import iluminado2 from "@/assets/iluminado2.jpg";
-import iluminado3 from "@/assets/iluminado3.jpg";
-import pinceis from "@/assets/pinceis.jpg";
-import pincelcomcilios from "@/assets/pincelcomcilios.jpg";
-import pincel from "@/assets/pincel.jpg";
-import pincelgrosso from "@/assets/pincelgrosso.jpg";
-import pincelsereia from "@/assets/pincelsereia.jpg";
-import pincelsereia1 from "@/assets/pincelsereia1.jpg";
-import pincelsereia2 from "@/assets/pincelsereia2.jpg";
-import pincelsereia3 from "@/assets/pincelsereia3.jpg";
-import sombra from "@/assets/sombra.jpg";
+
+import blush from "@/assets/produtos/blush.jpg";
+import cilios from "@/assets/produtos/cilios.jpg";
+import iluminado from "@/assets/produtos/iluminado.jpg";
+import iluminado2 from "@/assets/produtos/iluminado2.jpg";
+import iluminado3 from "@/assets/produtos/iluminado3.jpg";
+import pinceis from "@/assets/produtos/pinceis.jpg";
+import pincelcomcilios from "@/assets/produtos/pincelcomcilios.jpg";
+import pincel from "@/assets/produtos/pincel.jpg";
+import pincelgrosso from "@/assets/produtos/pincelgrosso.jpg";
+import pincelsereia from "@/assets/produtos/pincelsereia.jpg";
+import pincelsereia1 from "@/assets/produtos/pincelsereia1.jpg";
+import pincelsereia2 from "@/assets/produtos/pincelsereia2.jpg";
+import pincelsereia3 from "@/assets/produtos/pincelsereia3.jpg";
+import sombra from "@/assets/produtos/sombra.jpg";
 
 export const products: Product[] = [
   {
